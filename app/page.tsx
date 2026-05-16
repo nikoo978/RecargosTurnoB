@@ -364,10 +364,10 @@ export default function Page() {
         touched.add(n.persona);
       }
 
-      for (const p of touched) {
+      Array.from(touched).forEach((p) => {
         if (!guardiasSet[p]) guardiasSet[p] = new Set();
         guardiasSet[p].add(g.fechaKey);
-      }
+      });
     }
 
     for (const p of Object.keys(stats)) stats[p].guardias = guardiasSet[p]?.size || 0;
@@ -597,7 +597,7 @@ export default function Page() {
     const guardia = currentGuardia;
     saveGuardiaToHistory(guardia);
     const canvas = generateReportCanvas(guardia);
-    downloadCanvas(canvas, `centinelas_turno_b_${guardia.fecha.replaceAll("/", "-")}.jpg`);
+    downloadCanvas(canvas, `centinelas_turno_b_${guardia.fecha.replace(/\//g, "-")}.jpg`);
     alert("JPG generado. El historial de esta fecha fue actualizado sin duplicar la guardia.");
   }
 
